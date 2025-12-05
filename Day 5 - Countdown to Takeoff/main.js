@@ -49,4 +49,22 @@ function timeUntilTakeOff(fromTime, takeOffTime) {
   return Math.floor((takeMs - fromMs) / 1000);
 }
 
-timeUntilTakeOff("2025*12*25@00|00|12 NP", takeoff);
+// Other Solution
+function timeUntilTakeOff(fromTime, takeOffTime) {
+  // Helper that turns an Elf timestamp into milliseconds
+  function toMs(elf) {
+    // Split the components manually
+    const [datePart, timePart] = elf.replace(" NP", "").split("@");
+    const [Y, M, D] = datePart.split("*").map(Number);
+    const [h, m, s] = timePart.split("|").map(Number);
+
+    // Convert to milliseconds (UTC)
+    return Date.UTC(Y, M - 1, D, h, m, s);
+  }
+
+  const fromMs = toMs(fromTime);
+  const takeMs = toMs(takeOffTime);
+
+  // Difference in full seconds
+  return Math.floor((takeMs - fromMs) / 1000);
+}
