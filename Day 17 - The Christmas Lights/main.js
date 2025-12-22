@@ -1,0 +1,66 @@
+// The Christmas Lights
+
+// At the North Pole, they’ve set up a panel of Christmas lights 🎄✨ to decorate the workshop. Each light can be on with a color, or off.
+
+// The panel is represented as a matrix where each cell can be:
+
+// '.' → light off
+// 'R' → red light
+// 'G' → green light
+// The elves want to know if there is a line of 4 lights of the same color that are on and aligned on the panel (only horizontal ↔ or vertical ↕). Lights that are off ('.') don’t count.
+
+// hasFourLights([
+//   ['.', '.', '.', '.', '.'],
+//   ['R', 'R', 'R', 'R', '.'],
+//   ['G', 'G', '.', '.', '.']
+// ])
+// // true → there are 4 red lights horizontally
+
+// hasFourLights([
+//   ['.', 'G', '.', '.'],
+//   ['.', 'G', '.', '.'],
+//   ['.', 'G', '.', '.'],
+//   ['.', 'G', '.', '.']
+// ])
+// // true → there are 4 green lights vertically
+
+// hasFourLights([
+//   ['R', 'G', 'R'],
+//   ['G', 'R', 'G'],
+//   ['G', 'R', 'G']
+// ])
+// // false → there are no 4 lights of the same color in a row
+// Note: The board can be any size. No diagonals.
+
+// board -> array of string arrays. Contains '.', 'R', or 'G'
+// return -> boolean. If there are 4 of the same letter in a row/col
+function hasFourLights(board) {
+  let row = board.length;
+  let col = board[0].length;
+
+  for (let r = 0; r < row; r++) {
+    for (let c = 0; c < col; c++) {
+      const letter = board[r][c];
+      if (letter === ".") continue;
+
+      // Check horizontal
+      if (c + 3 < col) {
+        let count = 0;
+        for (let i = 0; i < 4; i++) {
+          if (board[r][c + i] === letter) count++;
+        }
+        if (count === 4) return true;
+      }
+
+      // Check vertical
+      if (r + 3 < row) {
+        let count = 0;
+        for (let i = 0; i < 4; i++) {
+          if (board[r + i][c] === letter) count++;
+        }
+        if (count === 4) return true;
+      }
+    }
+  }
+  return false;
+}
